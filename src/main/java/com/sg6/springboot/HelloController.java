@@ -1,4 +1,4 @@
-package com.example.springboot;
+package com.sg6.springboot;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +13,7 @@ public class HelloController {
 	@GetMapping("/")
 	public String index() {
 		double random = Math.random() * 49 + 1;
-		return "Greetings from Spring Boot! " + random;
+		return "Greetings from Spring Boot ! " + random;
 	}
 
 }

@@ -3,7 +3,7 @@
 .#*
 *#
 *~
-.classpath
+app/.classpath
 app/.project
 .settings
 bin

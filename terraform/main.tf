@@ -1,3 +1,5 @@
+#provider.tf
+
 terraform {
   required_providers {
     aws = {
@@ -13,9 +15,54 @@ provider "aws" {
     profile = "booking-app-user"
 }
 
-resource "aws_vpc" "booking" {
+#vpc.tf
+
+resource "aws_vpc" "booking_vpc" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
+  tags = {
+    Name = "booking_vpc"
+  }
 }
+
+resource "aws_subnet" "booking_subnet_1" {
+  vpc_id     = aws_vpc.booking_vpc.id
+  cidr_block = "10.0.1.0/24"
+  #availability_zone = "eu-central-1a"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "booking_subnet_1"
+  }
+}
+
+resource "aws_subnet" "booking_subnet_2" {
+  vpc_id     = aws_vpc.booking_vpc.id
+  cidr_block = "10.0.2.0/24"
+  #availability_zone = "eu-central-1b"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "booking_subnet_2"
+  }
+}
+
+#data "aws_subnets" "booking_subnets" {
+#  filter {
+#    name   = "vpc-id"
+#    values = [aws_vpc.booking_vpc.id]
+#  }
+#}
+#
+#data "aws_subnet" "booking_subnet" {
+#  for_each = toset(data.aws_subnets.booking_subnets.ids)
+#  id       = each.value
+#}
+#
+#output "subnet_cidr_blocks" {
+#  value = [for s in data.aws_subnet.booking_subnet : s.cidr_block]
+#}
+
+#eks.tf
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
@@ -26,7 +73,9 @@ module "eks" {
 
   cluster_endpoint_public_access  = true
 
-  subnet_ids               = ["subnet-abcde012", "subnet-bcde012a", "subnet-fghi345a"]
+  vpc_id = aws_vpc.booking_vpc.id
+
+  subnet_ids = [aws_subnet.booking_subnet_1.id, aws_subnet.booking_subnet_2.id]
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {

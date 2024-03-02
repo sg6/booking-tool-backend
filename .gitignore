@@ -18,3 +18,4 @@ README.html
 *.iml
 .terraform.lock.hcl
 **/.terraform/*
+terraform/terraform.tfstate*

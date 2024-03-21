@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                git 'https://github.com/sg6/booking-tool-backend.git'
+                sh 'docker build . -t sg6/booking-app-backend -f ./docker/Dockerfile &&
+                    docker run -p 8081:8080 sg6/booking-app-backend'
+            }
+        }
+    }
+}

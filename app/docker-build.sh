@@ -1,0 +1,1 @@
+docker build . -t sg6/booking-app-backend -f ./docker/Dockerfile

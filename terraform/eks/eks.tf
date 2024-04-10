@@ -10,11 +10,11 @@ module "eks" {
 
   enable_irsa = true
 
-  vpc_id = aws_vpc.booking_sg6_vpc.id
+  vpc_id = var.booking_sg6_vpc_id
 
-  subnet_ids = [aws_subnet.booking_sg6_subnet1.id, aws_subnet.booking_sg6_subnet2.id]
+  subnet_ids = [var.booking_sg6_subnet1_id, var.booking_sg6_subnet2_id]
 
-  iam_role_name = aws_iam_role.booking_sg6_eks_cluster.name
+  iam_role_name = var.booking_sg6_eks_cluster_name
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
@@ -30,9 +30,9 @@ module "eks" {
       instance_types = ["t3.medium"]
       capacity_type  = "SPOT"
 
-      iam_instance_profile_name = aws_iam_instance_profile.booking_sg6_eks_worker.name
+      iam_instance_profile_name = var.booking_sg6_eks_worker_name
 
-      node_security_group_id = aws_security_group.eks_worker_sg.id
+      node_security_group_id = var.node_security_group_id
     }
   }
 

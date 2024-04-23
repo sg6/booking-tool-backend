@@ -1,4 +1,4 @@
 apiVersion: v1
-kind: Namespace
+kind: Namespace # namespace file for this ressource
 metadata:
-  name: devops-tools
+  name: tooling # name of this namespace

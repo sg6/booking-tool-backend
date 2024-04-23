@@ -8,7 +8,7 @@ module "eks" {
   cluster_endpoint_private_access = true # default value, for better overview
   cluster_endpoint_public_access  = true
 
-  enable_irsa = true
+  enable_irsa = false
 
   vpc_id = var.booking_sg6_vpc_id
 
@@ -40,4 +40,6 @@ module "eks" {
     Environment = "dev"
     Terraform   = "true"
   }
+
+    enable_cluster_creator_admin_permissions = true
 }

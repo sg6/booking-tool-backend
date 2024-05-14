@@ -1,4 +1,0 @@
-apiVersion: v1
-kind: Namespace # namespace file for this ressource
-metadata:
-  name: tooling # name of this namespace

@@ -41,3 +41,5 @@ module "eks" {
   booking_sg6_subnet2_id = module.network.booking_sg6_subnet2_id
   booking_sg6_vpc_id = module.network.booking_sg6_vpc_id
 }
+
+#namespace tooling, created by terraform (for now, more namespaces after)

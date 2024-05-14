@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service # describes the service of this ressource, describing the network interface to forward a http call to the correct pod(s)
+metadata:
+  name: jenkins-service # internal name to identify the service
+  namespace: tooling # our namespace
+#  annotations:
+#      prometheus.io/scrape: 'true'
+#      prometheus.io/path:   /
+#      prometheus.io/port:   '8080'
+spec:
+  selector:
+    app: jenkins-server # the name of the app, as defined in the template part of the jenkinsDeployment.yaml
+  type: NodePort # the node port means external access (every node of this cluster) of Jenkins over the below mentioned port in ports.nodePort
+  ports:
+    - port: 8080 # internal port for the cluster
+      targetPort: 8080 # port of the pod
+      nodePort: 32000 # port for external access to access the node

@@ -22,14 +22,14 @@ spec:
     - ReadWriteOnce
   local:
     path: /mnt
-#  nodeAffinity: # comment <-- can be removed
-#    required:
-#      nodeSelectorTerms:
-#      - matchExpressions:
-#        - key: kubernetes.io/hostname
-#          operator: In
-#          values:
-#          - ip-10-0-1-99.ec2.internal
+  nodeAffinity: # comment <-- can be removed
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: topology.kubernetes.io/zone
+          operator: In
+          values:
+          - us-east-1a
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

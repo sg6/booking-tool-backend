@@ -25,7 +25,7 @@ module "eks" {
     booking_sg6_ng1 = {
       min_size     = 1
       max_size     = 3
-      desired_size = 2
+      desired_size = 3
 
       instance_types = ["t3.medium"]
       capacity_type  = "SPOT"

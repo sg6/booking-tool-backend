@@ -6,6 +6,16 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+
+    flux = {
+      source = "fluxcd/flux"
+      version = "1.3.0"
+    }
+
+    github = {
+      source  = "integrations/github"
+      version = ">= 6.1"
+    }
   }
 }
 
@@ -22,7 +32,6 @@ provider "aws" {
 
 module "network" {
   source = "./network"
-  # variables...
 }
 
 module "iam" {
@@ -42,4 +51,40 @@ module "eks" {
   booking_sg6_vpc_id = module.network.booking_sg6_vpc_id
 }
 
-#namespace tooling, created by terraform (for now, more namespaces after)
+module "flux" {
+  source = "./flux"
+}
+
+provider "flux" {
+  kubernetes = {
+    host = module.eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+    config_path = "~/.kube/mentorship.config"
+  }
+  git = {
+    url = "https://github.com/${module.flux.github_org}/${module.flux.github_repo}.git"
+    http = {
+      username = "git" # This can be any string when using a personal access token
+      password = module.flux.github_token
+    }
+  }
+}
+
+resource "github_repository" "this" {
+  name        = module.flux.github_repo
+  description = module.flux.github_repo
+  visibility  = "public"
+  auto_init   = true # This is extremely important as flux_bootstrap_git will not work without a repository that has been initialised
+}
+
+resource "flux_bootstrap_git" "this" {
+  depends_on = [github_repository.this]
+
+  embedded_manifests = true
+  path               = "tooling/flux-system"
+}
+
+provider "github" {
+  owner = module.flux.github_org
+  token = module.flux.github_token
+}

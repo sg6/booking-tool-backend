@@ -17,3 +17,8 @@ output "booking_sg6_vpc_id" {
   description = ""
   value       = aws_vpc.booking_sg6_vpc.id
 }
+
+# output "availability_zone" {
+#   description = "AZ of the cluster"
+#   value       = "us-east-1a"
+# }

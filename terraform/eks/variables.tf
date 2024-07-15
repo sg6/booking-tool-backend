@@ -32,3 +32,8 @@ variable "booking_sg6_vpc_id" {
   description = ""
   type        = string
 }
+
+# variable "cluster_name" {
+#   description = "Cluster name"
+#   type        = string
+# }

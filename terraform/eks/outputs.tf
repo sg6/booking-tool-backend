@@ -7,3 +7,8 @@ output "cluster_certificate_authority_data" {
   description = ""
   value = module.eks.cluster_certificate_authority_data
 }
+
+# output "cluster_name" {
+#   description = "Cluster name"
+#   value = "booking-app-sg6-cluster"
+# }

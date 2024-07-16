@@ -5,13 +5,14 @@
 **Dev**
 
 - `./mvnw spring-boot:run`
-- `./mvnw clean package`
 
 Open localhost:8080
 
 **Build**
 
-- `docker build . -t sg6/booking-app-backend -f ./docker/Dockerfile`
-- `docker run -p 8081:8080 sg6/booking-app-backend`
+- `./mvnw clean package`
+- `./docker-build.sh`
+- `docker push sg6web/booking-app-backend`
+- `./docker-run.sh`
 
 Open localhost:8081

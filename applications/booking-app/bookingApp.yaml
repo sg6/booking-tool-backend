@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-app-backend-deployment
+  labels:
+    app: booking-app-backend
+  namespace: applications
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: booking-app-backend
+  template:
+    metadata:
+      labels:
+        app: booking-app-backend
+    spec:
+      containers:
+        - name: booking-app-backend
+          image: sg6web/booking-app-backend
+          ports:
+            - containerPort: 8081

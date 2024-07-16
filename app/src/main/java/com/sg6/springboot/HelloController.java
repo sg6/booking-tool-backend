@@ -16,7 +16,14 @@ public class HelloController {
 	public String index() {
 		double randomNumber = Math.random() * 49 + 1;
 		String randomStr = String.format("%.2f", randomNumber);
-		return "Greetings from Spring Boot! " + randomStr;
+		return "<h1>Hello Leon</h1> <p>Greetings from Spring Boot! " + randomStr + "</p>";
+	}
+
+	@GetMapping("/random")
+	public String randomIndex() {
+		double randomNumber = Math.random() * 49 + 1;
+		String randomStr = String.format("%.6f", randomNumber);
+		return "<h1>Hello Random</h1> <p>Even more random numbers: " + randomStr + "</p>";
 	}
 
 }
